@@ -1,1 +1,5 @@
 journal/pool_day_datas.db
+.envrc
+.idea
+/target/
+*.spkg

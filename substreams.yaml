@@ -1,0 +1,31 @@
+specVersion: v0.1.0
+package:
+  name: uniswap_v3_kv
+  version: v0.1.5-beta
+  url: https://github.com/streamingfast/substreams-uniswap-v3-info
+  doc: |
+    This substream module add KV support to Uniswap v3 substreams.
+
+imports:
+  uniswapv3: ../substreams-uniswap-v3/uniswap-v3-v0.1.5-beta.spkg
+  sink_kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v0.1.2/substreams-sink-kv-v0.1.2.spkg
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: target/wasm32-unknown-unknown/release/substreams_uniswap_v3_info.wasm
+
+modules:
+  - name: kv_out
+    kind: map
+    initialBlock: 12369621
+    inputs:
+      - map: uniswapv3:map_pools_created
+      - store: uniswapv3:store_total_tx_counts
+        mode: deltas
+      - store: uniswapv3:store_swaps_volume
+        mode: deltas
+      - store: uniswapv3:store_derived_tvl
+        mode: deltas
+    output:
+      type: proto:sf.substreams.sink.kv.v1.KVOperations
