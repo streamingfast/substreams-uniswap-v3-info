@@ -1,0 +1,5 @@
+global:
+  language: rust
+  variant: library
+release:
+  upload-substreams-spkg: substreams.yaml
