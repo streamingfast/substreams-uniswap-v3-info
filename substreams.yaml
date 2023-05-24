@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: uniswap_v3_kv
-  version: v0.1.0
+  version: v0.1.3
   url: https://github.com/streamingfast/substreams-uniswap-v3-info
   doc: |
     This Substreams module add KV support to Uniswap v3 Substreams.
