@@ -1,0 +1,21 @@
+specVersion: v0.1.0
+package:
+  name: "substreams_unsiwap_v3_info_query"
+  version: v0.4.0
+
+imports:
+  sink_kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v0.1.2/substreams-sink-kv-v0.1.2.spkg
+  uniswap_v3_kv: https://github.com/streamingfast/substreams-uniswap-v3-info/releases/download/v0.1.1/substreams-uniswap-v3-info-v0.1.1.spkg
+
+protobuf:
+  files:
+    - service.proto
+  importPaths:
+    - ./proto
+
+sink:
+  module: uniswap_v3_kv:kv_out
+  type: sf.substreams.sink.kv.v1.WASMQueryService
+  config:
+    wasmQueryModule: "@@./target/wasm32-wasi/release/wasm_query.wasm"
+    grpcService: "uniswap.info.v1.UniswapInfo"
