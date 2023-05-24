@@ -37,7 +37,6 @@ pub fn pool_day_data_create(ops: &mut KvOperations, tx_count_deltas: &Deltas<Del
     {
         let (_table_name, pool_addr, day_id ) = pool_windows_id_fields(&delta.key);
         let date = day_id * 86400;
-        ops.push_new(format!("PoolDayData:0x{pool_addr}:{date:0>10}:date"), date.to_string(), 0);
         ops.push_new(format!("PoolDayData:0x{pool_addr}:{date:0>10}:volumeUSD"), "0.0", 0);
         ops.push_new(format!("PoolDayData:0x{pool_addr}:{date:0>10}:tvlUSD"), "0.0", 0);
     }
