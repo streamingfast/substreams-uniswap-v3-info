@@ -2,10 +2,6 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PoolDayDatasRequest {
-    #[prost(int64, tag="1")]
-    pub start_time: i64,
-    #[prost(int64, tag="2")]
-    pub skip: i64,
     #[prost(string, repeated, tag="3")]
     pub addresses: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
@@ -18,11 +14,11 @@ pub struct PoolDayDatasResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PoolsDayData {
-    #[prost(string, tag="1")]
-    pub date: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
-    pub volume_usd: ::prost::alloc::string::String,
-    #[prost(string, tag="3")]
-    pub tvl_usd: ::prost::alloc::string::String,
+    #[prost(uint32, tag="1")]
+    pub date: u32,
+    #[prost(double, tag="2")]
+    pub volume_usd: f64,
+    #[prost(double, tag="3")]
+    pub tvl_usd: f64,
 }
 // @@protoc_insertion_point(module)

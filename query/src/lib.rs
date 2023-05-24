@@ -31,8 +31,6 @@ pub fn uniswap_info_v1_uniswapinfo_pooldaydatas(v: Vec<u8>) -> Result<Vec<u8>, S
 
         let key_values = store.scan(start, end, None);
 
-        println!("key values: {:?}", key_values.pairs.len());
-        
         for kv_pair in key_values.pairs {
             let date_id = kv_pair.key.split(":").nth(2).unwrap();
             let data_type = kv_pair.key.split(":").last().unwrap();
