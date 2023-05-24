@@ -27,5 +27,8 @@ Use in conjunction with https://github.com/streamingfast/substreams-sink-kv
 kvdb read prefix "kPoolDayData"  --dsn "badger3://$(pwd)/badger_data.db" --decoder="ascii"
 
 *WASM Query curl*
-❯ curl --header 'Content-Type: application/json' --data '{"startTime": 1619170975,"addresses": ["0x11b815efb8f581194ae79006d24e0d814b7697f6"], "skip": 0}' localhost:7878/uniswap.info.v1.UniswapInfo/PoolDayDatas
+
+```bash
+curl --header 'Content-Type: application/json' --data '{"addresses": ["0x11b815efb8f581194ae79006d24e0d814b7697f6"]}' localhost:7878/uniswap.info.v1.UniswapInfo/PoolDayDatas
+```
 
