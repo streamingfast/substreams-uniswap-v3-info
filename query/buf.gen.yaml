@@ -1,14 +1,10 @@
 version: v1
 plugins:
-  - name: prost
-    out: blockmeta_wasm_query/src/pb
-  - name: es
-    out: frontend/src/pb
-    # With target=ts, we generate TypeScript files.
-    # Use target=js+dts to generate JavaScript and TypeScript declaration files
-    # like remote generation does.
-    opt: target=ts
-  - name: connect-web
-    out: frontend/src/pb
-    # With target=ts, we generate TypeScript files.
-    opt: target=ts
+  - plugin: buf.build/community/neoeinstein-prost:v0.2.2
+    out: src/pb
+    opt: file_descriptor_set=false
+
+  - remote: buf.build/prost/plugins/crate:v0.3.1-1
+    out: src/pb
+    opt:
+      - no_features

@@ -1,6 +1,7 @@
 journal/pool_day_datas.db
 .envrc
 .idea
+/query/target
 /target/
 /build
 /dist
