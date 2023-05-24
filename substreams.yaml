@@ -20,7 +20,6 @@ modules:
     kind: map
     initialBlock: 12369621
     inputs:
-      - map: uniswapv3:map_pools_created
       - store: uniswapv3:store_total_tx_counts
         mode: deltas
       - store: uniswapv3:store_swaps_volume

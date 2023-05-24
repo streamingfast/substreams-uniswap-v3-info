@@ -1,15 +1,17 @@
 extern crate core;
 
-#[path = "kv_out.rs"]
-mod kv;
-mod pb;
-
 use substreams::errors::Error;
 use substreams_sink_kv::pb::sf::substreams::sink::kv::v1::KvOperations;
-use substreams::store::{Delta, Deltas, DeltaBigDecimal, DeltaBigInt, key_first_segments_in, key_last_segments_in, key_last_segment_in, key_first_segment_in, operations_ne};
+use substreams::store::{Deltas, DeltaBigDecimal, DeltaBigInt};
+use substreams::key::{
+    key_first_segments_in,
+    key_last_segment_in, key_first_segment_in, segment,
+    first_segment,
+    operations_ne,
+};
+
 use substreams::pb::substreams::store_delta::Operation;
-use substreams::scalar::{BigDecimal, BigInt};
-use crate::pb::uniswap::types::v1::Pools;
+use substreams::scalar::{BigInt};
 
 #[substreams::handlers::map]
 pub fn kv_out(
@@ -67,14 +69,14 @@ pub fn pool_day_data_update(
     {
         let (_table_name, pool_addr, day_id ) = pool_windows_id_fields(&delta.key);
         let date = day_id * 86400;
-        ops.push_new(format!("PoolDayData:0x{pool_address}:{date:0>10}:tvlUSD"), &delta.new_value.to_string(), 0);
+        ops.push_new(format!("PoolDayData:0x{pool_addr}:{date:0>10}:tvlUSD"), &delta.new_value.to_string(), 0);
     }
 }
 
 pub fn pool_windows_id_fields(key: &String) -> (&str, &str, u64) {
     let table_name = first_segment(key);
     let time_id = segment(key, 1).parse::<u64>().unwrap();
-    let pool_address = segment(key, 2);
+    let pool_addr = segment(key, 2);
 
-    return (table_name, pool_address, time_id);
+    return (table_name, pool_addr, time_id);
 }
