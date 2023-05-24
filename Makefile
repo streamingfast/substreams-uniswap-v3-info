@@ -6,6 +6,10 @@ STOP_BLOCK ?= +500
 build:
 	cargo build --target wasm32-unknown-unknown --release
 
+.PHONY: build-query
+build:
+	./query/build.sh
+
 .PHONY: protogen
 protogen:
 	substreams protogen ./substreams.yaml --exclude-paths="sf/substreams,google"

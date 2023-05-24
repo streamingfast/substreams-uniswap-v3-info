@@ -1,5 +1,5 @@
 [package]
-name = "blockmeta-wasm-query"
+name = "uniswap-wasm-query"
 version = "0.1.0"
 authors = ["StreamingFast"]
 edition = "2018"

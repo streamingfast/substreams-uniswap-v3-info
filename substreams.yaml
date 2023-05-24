@@ -15,6 +15,12 @@ binaries:
     type: wasm/rust-v1
     file: target/wasm32-unknown-unknown/release/substreams_uniswap_v3_info.wasm
 
+protobuf:
+  files:
+    - service.proto
+  importPaths:
+    - ./proto/uniswap/info/v1
+
 modules:
   - name: kv_out
     kind: map
@@ -28,3 +34,10 @@ modules:
         mode: deltas
     output:
       type: proto:sf.substreams.sink.kv.v1.KVOperations
+
+sink:
+  module: kv_out
+  type: sf.substreams.sink.kv.v1.WASMQueryService
+  config:
+    wasmQueryModule: "@@./query/target/wasm32-wasi/release/wasm_query.wasm"
+    grpcService: "uniswap.info.v1.UniswapInfo"
