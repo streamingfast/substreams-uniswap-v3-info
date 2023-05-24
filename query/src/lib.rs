@@ -1,7 +1,7 @@
 mod pb;
 
 use crate::pb::uniswap::info::v1::{PoolDayDatasRequest, PoolDayDatasResponse, PoolsDayData};
-use bigdecimal::BigDecimal;
+use bigdecimal::{BigDecimal, ToPrimitive};
 use prost::Message;
 use std::collections::HashMap;
 use std::str;
@@ -50,9 +50,9 @@ pub fn uniswap_info_v1_uniswapinfo_pooldaydatas(v: Vec<u8>) -> Result<Vec<u8>, S
 
     for (key, val) in accum.iter_mut() {
         out.pool_days_data.push(PoolsDayData {
-            date: key.to_string(),
-            volume_usd: val.volume_usd.to_string(),
-            tvl_usd: val.tvl_usd.to_string(),
+            date: key.parse::<u32>().unwrap(),
+            volume_usd: val.volume_usd.to_f64().unwrap(),
+            tvl_usd: val.tvl_usd.to_f64().unwrap(),
         })
     }
 
