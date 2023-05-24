@@ -7,8 +7,8 @@ package:
     This Substreams module add KV support to Uniswap v3 Substreams.
 
 imports:
-  uniswapv3: https://github.com/streamingfast/substreams-uniswap-v3/releases/download/v0.2.4/substreams.spkg
-  sink_kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v2.1.3/substreams-sink-kv-v2.1.3.spkg
+  uniswapv3: https://github.com/streamingfast/substreams-uniswap-v3/releases/download/v0.2.5/substreams.spkg
+  sink_kv: https://github.com/streamingfast/substreams-sink-kv/releases/download/v2.1.4/substreams-sink-kv-v2.1.4.spkg
 
 binaries:
   default:

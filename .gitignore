@@ -3,4 +3,5 @@ journal/pool_day_datas.db
 .idea
 /target/
 /build
+/dist
 *.spkg
