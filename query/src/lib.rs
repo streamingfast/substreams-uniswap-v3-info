@@ -21,6 +21,7 @@ struct PoolDayData {
 
 #[wasmedge_bindgen]
 pub fn uniswap_info_v1_uniswapinfo_pooldaydatas(v: Vec<u8>) -> Result<Vec<u8>, String> {
+    // We use a pure Rust handler otherwise editor(s) has problem helping you within the macro block.
     handler(v)
 }
 
@@ -42,12 +43,11 @@ pub fn handler(v: Vec<u8>) -> Result<Vec<u8>, String> {
         let key_values = store.scan(start, end, None);
 
         for kv_pair in key_values.pairs {
-            if pool_addr == "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640" {
-                println!("key {:?}", kv_pair.key);
-            }
+            // if pool_addr == "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640" {
+            //     println!("key {:?}", kv_pair.key);
+            // }
 
             let Key { data_type, date_id } = split_key(&kv_pair.key);
-            // let value = BigDecimal::from_str(str::from_utf8(kv_pair.value.as_slice()).unwrap()).unwrap();
             let value = f64::from_str(unsafe { str::from_utf8_unchecked(kv_pair.value.as_slice()) }).unwrap();
             let elem: &mut PoolDayData = accum.entry(date_id.to_string()).or_default();
 
@@ -63,20 +63,19 @@ pub fn handler(v: Vec<u8>) -> Result<Vec<u8>, String> {
     }
 
     let now_out = SystemTime::now();
-
-    let mut out = PoolDayDatasResponse { pool_days_data: vec![] };
-
-    for (key, val) in accum.iter_mut() {
-        out.pool_days_data.push(PoolsDayData {
-            date: key.parse::<u32>().unwrap(),
-            volume_usd: val.volume_usd.to_f64().unwrap(),
-            tvl_usd: val.tvl_usd.to_f64().unwrap(),
-        })
-    }
+    let mut out = PoolDayDatasResponse {
+        pool_days_data: accum
+            .into_iter()
+            .map(|(key, val)| PoolsDayData {
+                date: key,
+                volume_usd: val.volume_usd.to_string(),
+                tvl_usd: val.tvl_usd.to_string(),
+            })
+            .collect(),
+    };
     println!("out done in {:?}", now_out.elapsed().unwrap());
 
     let now_sort = SystemTime::now();
-
     out.pool_days_data.sort_by(|a, b| a.date.cmp(&b.date));
     println!("sort done in {:?}", now_sort.elapsed().unwrap());
 
