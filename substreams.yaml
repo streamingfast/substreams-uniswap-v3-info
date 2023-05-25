@@ -39,5 +39,5 @@ sink:
   module: kv_out
   type: sf.substreams.sink.kv.v1.WASMQueryService
   config:
-    wasmQueryModule: "@@./query/target/wasm32-wasi/release/wasm_query.wasm"
+    wasmQueryModule: "@@./target/wasm32-wasi/release/wasm_query.wasm"
     grpcService: "uniswap.info.v1.UniswapInfo"

@@ -1,5 +1,5 @@
 [package]
-name = "uniswap-wasm-query"
+name = "query"
 version = "0.1.0"
 authors = ["StreamingFast"]
 edition = "2018"

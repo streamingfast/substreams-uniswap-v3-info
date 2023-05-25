@@ -6,4 +6,4 @@ journal/pool_day_datas.db
 /build
 /dist
 *.spkg
-badger_data.db
+kv.db
