@@ -80,8 +80,6 @@ fn split_key(key: &String) -> Key {
         last = Some(part)
     }
 
-    if last.is_none() {}
-
     match last {
         Some(last) => Key {
             date_id: date_id.unwrap(),
