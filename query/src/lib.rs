@@ -1,7 +1,6 @@
 mod pb;
 
 use crate::pb::uniswap::info::v1::{PoolDayDatasRequest, PoolDayDatasResponse, PoolsDayData};
-use bigdecimal::{BigDecimal, ToPrimitive};
 use prost::Message;
 use std::collections::HashMap;
 use std::str;
@@ -28,7 +27,7 @@ pub fn handler(v: Vec<u8>) -> Result<Vec<u8>, String> {
     let req = PoolDayDatasRequest::decode(&v[..]).expect("Failed to decode");
     let store = Store::new();
 
-    let mut accum = HashMap::<String, PoolDayData>::with_capacity(20 * 1000);
+    let mut accum = HashMap::<u32, PoolDayData>::with_capacity(20 * 1000);
 
     for pool_addr in req.addresses {
         let start = format!("PoolDayData:{}:0000000000", pool_addr);
@@ -38,7 +37,7 @@ pub fn handler(v: Vec<u8>) -> Result<Vec<u8>, String> {
         for kv_pair in key_values.pairs {
             let Key { data_type, date_id } = split_key(&kv_pair.key);
             let value = f64::from_str(unsafe { str::from_utf8_unchecked(kv_pair.value.as_slice()) }).unwrap();
-            let elem: &mut PoolDayData = accum.entry(date_id.to_string()).or_default();
+            let elem: &mut PoolDayData = accum.entry(date_id).or_default();
 
             match data_type.as_str() {
                 "volumeUSD" => elem.volume_usd += &value,
@@ -53,8 +52,8 @@ pub fn handler(v: Vec<u8>) -> Result<Vec<u8>, String> {
             .into_iter()
             .map(|(key, val)| PoolsDayData {
                 date: key,
-                volume_usd: val.volume_usd.to_string(),
-                tvl_usd: val.tvl_usd.to_string(),
+                volume_usd: val.volume_usd,
+                tvl_usd: val.tvl_usd,
             })
             .collect(),
     };
@@ -65,7 +64,7 @@ pub fn handler(v: Vec<u8>) -> Result<Vec<u8>, String> {
 }
 
 struct Key {
-    date_id: String,
+    date_id: u32,
     data_type: String,
 }
 
@@ -75,7 +74,7 @@ fn split_key(key: &String) -> Key {
 
     for (i, part) in key.split(":").enumerate() {
         if i == 2 {
-            date_id = Some(part.to_string())
+            date_id = Some(u32::from_str(part).unwrap())
         }
         last = Some(part)
     }
