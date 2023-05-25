@@ -18,6 +18,10 @@ build_query:
 protogen:
 	substreams protogen ./substreams.yaml --exclude-paths="sf/substreams,google,uniswap/v1/,substreams/sink"
 
+.PHONY: pack
+pack:
+	substreams pack
+
 .PHONY: stream_kv
 stream_kv: build
 	substreams run -e $(ENDPOINT) substreams.yaml kv_out -t $(STOP_BLOCK)
