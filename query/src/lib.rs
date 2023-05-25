@@ -42,6 +42,10 @@ pub fn handler(v: Vec<u8>) -> Result<Vec<u8>, String> {
         let key_values = store.scan(start, end, None);
 
         for kv_pair in key_values.pairs {
+            if pool_addr == "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640" {
+                println!("key {:?}", kv_pair.key);
+            }
+
             let Key { data_type, date_id } = split_key(&kv_pair.key);
             // let value = BigDecimal::from_str(str::from_utf8(kv_pair.value.as_slice()).unwrap()).unwrap();
             let value = f64::from_str(unsafe { str::from_utf8_unchecked(kv_pair.value.as_slice()) }).unwrap();

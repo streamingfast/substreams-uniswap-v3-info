@@ -16,7 +16,7 @@ build_query:
 
 .PHONY: protogen
 protogen:
-	substreams protogen ./substreams.yaml --exclude-paths="sf/substreams,google"
+	substreams protogen ./substreams.yaml --exclude-paths="sf/substreams,google,uniswap/v1/,substreams/sink"
 
 .PHONY: stream_kv
 stream_kv: build

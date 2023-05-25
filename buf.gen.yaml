@@ -1,10 +1,10 @@
 version: v1
 plugins:
   - plugin: buf.build/community/neoeinstein-prost:v0.2.2
-    out: src/pb
+    out: query/src/pb
     opt: file_descriptor_set=false
 
   - remote: buf.build/prost/plugins/crate:v0.3.1-1
-    out: src/pb
+    out: query/src/pb
     opt:
       - no_features
